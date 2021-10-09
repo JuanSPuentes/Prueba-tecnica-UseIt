@@ -44,13 +44,21 @@ ACCOUNT_EMAIL_UNIQUE = True
 """ AUTH_USER_MODEL = "accounts.User" """
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
-""" ACCOUNT_LOGOUT_REDIRECT_URL = "account_login" """
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 0
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 0
+ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 
 LOGIN_REDIRECT_URL = "home"
-""" LOGIN_URL = "account_login" """
+LOGIN_URL = "account_login"
 
+#Se usa para ponder usar la autenticacion con allouth, configuracion basi
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

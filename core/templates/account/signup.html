@@ -11,17 +11,21 @@
                                         <h4 class="text-dark mb-4">Registro de Usuarios</h4>
                                     </div>
                                 <form action="" method="post">{% csrf_token %}
+                                {{form.email.errors}}
                                     <p>
                                         <label class="text-dark text-center" for="id_email">E-mail:</label> 
                                         <input class="border rounded-0 form-control" type="email" name="email" placeholder="E-mail " autocomplete="email" required="" id="id_email"></p>
+                                {{form.username.errors}}
                                     <p>
                                         <label class="text-dark text-center" for="id_username">Nombre Usuario:</label> 
                                         <input class="border rounded-0 form-control" type="text" name="username" placeholder="Nombre de Usuario" autocomplete="username" minlength="1" maxlength="150" required="" id="id_username">
                                     </p>
+                                {{form.password.errors}}
                                     <p>
                                         <label class="text-dark text-center" for="id_password1">Contraseña:</label> 
                                         <input class="border rounded-0 form-control" type="password" name="password1" placeholder="Contraseña" autocomplete="new-password" required="" id="id_password1">
                                     </p>
+                                {{form.password2.errors}}
                                     <p>
                                         <label class="text-dark text-center" for="id_password2">Repetir Contraseña:</label> 
                                         <input class="border rounded-0 form-control" type="password" name="password2" placeholder="Repetir Contraseña" required="" id="id_password2">
