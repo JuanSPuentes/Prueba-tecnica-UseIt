@@ -1,0 +1,87 @@
+<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-project-diagram"></i></div>
+                <div class="sidebar-brand-text mx-3"><span>PROYECTOS</span></div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="nav navbar-nav text-light" id="accordionSidebar">
+        {% if request.user.groups.id == 3 %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="">
+                    <i class="fas fa-plus"></i>
+                    <span>Crear Empleado</span>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="">
+                    <i class="fas fa-folder-plus"></i>
+                    <span>Crear Proyectos</span>
+                </a>
+            </li>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'account_login' %}">
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            {% if not request.user.groups.id == 1 %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="">
+                    <i class="fas fa-eye"></i>
+                    <span>Ver todos los proyectos</span>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="">
+                    <i class="fas fa-eye"></i>
+                    <span>Ver todos los Empleados</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Ver Proyecto Vinculado</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        <div class="text-center d-none d-md-inline">
+            <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
+        </div>
+    </div>
+</nav>
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav flex-nowrap ml-auto">
+                    <li class="nav-item dropdown no-arrow" role="presentation">
+                        {% if user.is_authenticated %}
+                        <div class="nav-item dropdown no-arrow">
+                            <a
+                                class="dropdown-toggle nav-link"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                                href="#"
+                            >
+                                <span class="d-none d-lg-inline mr-2 text-gray-600 small">{{user.first_name}}</span>
+                            </a>
+                            <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
+                                <a class="dropdown-item" role="presentation" href="{% url 'Logout' %}">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
