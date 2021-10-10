@@ -119,15 +119,68 @@ class ListUsuarios(LoginRequiredMixin, ListView):
 
 class CreateInvitaciones(LoginRequiredMixin, DetailView):
     model = Invitaciones
-    template_name = "empresa/list_usuarios.html"
 
     def get(self, request, *args, **kwargs):
         empresa = Empresa.objects.filter(user = request.user).first()
         invitado = User.objects.get(username = kwargs['user'])
 
         invitacion = Invitaciones.objects.get(user = invitado)
-        print(invitacion)
-        print(empresa)
         invitacion.empresa = empresa
         invitacion.save()
         return redirect('empresa:list-usuario') 
+
+class ListInvitaciones(LoginRequiredMixin, ListView):
+    model = Invitaciones
+    template_name = "empresa/list_invitaciones.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["invitaciones"] =  Invitaciones.objects.filter(user = self.request.user)
+        return context
+
+class AceptarInvitacion(LoginRequiredMixin, DetailView):
+    model = Invitaciones
+
+    def get(self, request, *args, **kwargs):
+        #actualizacion del estado de la invitacion
+        invitado = User.objects.get(username = kwargs['user'])
+        invitacion = Invitaciones.objects.get(user = invitado)
+        invitacion.estado = "Aceptada"
+        invitacion.save()
+        #agregando el usuario a la empresa
+        empresa = Empresa.objects.get(nombre = invitacion.empresa)
+        empresa.usuarios.add(invitado)
+        empresa.save()
+        return redirect('empresa:list-empresa') 
+
+class RechazarInvitacion(LoginRequiredMixin, DetailView):
+    model = Invitaciones
+
+    def get(self, request, *args, **kwargs):
+        #actualizacion del estado de la invitacion
+        invitado = User.objects.get(username = kwargs['user'])
+        invitacion = Invitaciones.objects.get(user = invitado)
+        invitacion.estado = "Espera"
+        invitacion.empresa = None
+        invitacion.save()
+        return redirect('empresa:list-empresa')
+
+class DeleteUsuarioInvitado(LoginRequiredMixin, DetailView):
+    model = Empresa 
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs['user'])
+        invitado = User.objects.get(username = kwargs['user'])
+        #agregando el usuario a la empresa
+        empresa = Empresa.objects.get(user = self.request.user)
+        empresa.usuarios.remove(invitado)
+        empresa.save()
+
+        return redirect('empresa:list-empresa') 
+    #Verificamos si el usuario que quiere Eliminar este objeto es al mismo al que le pertenece
+"""     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            empresa = Empresa.objects.get(pk = kwargs['pk'])
+            if empresa.user == request.user:
+                return super().dispatch(request, *args, **kwargs)
+        return redirect('Home') """

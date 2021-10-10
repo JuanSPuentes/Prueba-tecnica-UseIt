@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card shadow">
     <div class="card-header py-3">
-        <p class="text-primary m-0 font-weight-bold">MIS EMPRESAS</p>
+        <p class="text-primary m-0 font-weight-bold">Enviar Invitaciones</p>
     </div>
     <div class="card-body">
         <div
@@ -22,6 +22,7 @@
                     {% for i in object_list  %}
                     {% comment %} El usuario que esta logeado no se puede mandar una invitacion asi mismo {% endcomment %}
                     {% if i.user != user %}
+                    {% if not i.empresa %}
                     <tr>
                         <td>{{i.user}}</td>
 
@@ -33,7 +34,6 @@
                             {% if i.empresa == empresa and empresa !=  None %}
                                 <a href="" class="btn btn-primary text-white">{{i.estado}}</a>
                             {% else %}
-                            {% comment %} Si el usuario logeado tiene una empresa darle la posibilidad de invitar {% endcomment %}
                             {% if empresa %}
                                 <a href="{% url 'empresa:invitar-usuario' i.user %}" class="btn btn-primary text-white">Invitar</a>
                             {% else %}
@@ -42,11 +42,20 @@
                             {% endif %}
                         {% endif %}
                         {% else %}
+                        {% if i.estado == 'Aceptada' %}
+                        {% if i.empresa == empresa %}
+                        <a href="" class="btn btn-primary text-white">{{i.estado}}</a>
+                        {% else %}
                         <a href="{% url 'empresa:invitar-usuario' i.user %}" class="btn btn-primary text-white">Invitar</a>
                         {% endif %}
+                        {% else %}
+                        <a href="{% url 'empresa:invitar-usuario' i.user %}" class="btn btn-primary text-white">Invitar</a>
+                        {% endif %}
+                    {% endif %}
                         </td>
                     </tr>
 
+                    {% endif %}
                     {% endif %}
                     {% endfor %}
                 </tbody>

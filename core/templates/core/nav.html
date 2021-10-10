@@ -43,18 +43,12 @@
                     <span>Invitar Usuarios</span>
                 </a>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" href="">
-                    <i class="fas fa-eye"></i>
-                    <span>Ver todos los Empleados</span>
-                </a>
-            </li>
             {% comment %} {% endif %} {% endcomment %}
 
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{% url 'empresa:list-invitaciones' %}">
                     <i class="fas fa-project-diagram"></i>
-                    <span>Ver Proyecto Vinculado</span>
+                    <span>Mis Invitaciones</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">

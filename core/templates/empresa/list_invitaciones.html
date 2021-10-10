@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">MIS INVITACIONES</p>
+    </div>
+    <div class="card-body">
+        <div
+            class="table-responsive table mt-2"
+            id="dataTable"
+            role="grid"
+            aria-describedby="dataTable_info">
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in invitaciones  %}
+                    {% comment %} Se valida si la invitacion tiene empresa {% endcomment %}
+                    {% if i.empresa %}
+                    <tr>
+                        <td>{{i.empresa}}</td>
+                        {% if i.estado == 'Espera' %}
+                        <td>
+                        <a href="{% url 'empresa:aceptar-invitaciones' i.user %}" class="btn btn-primary text-white"> Aceptar</a>
+                        <a href="{% url 'empresa:rechazar-invitaciones' i.user %}" class="btn btn-primary text-white"> Rechazar</a>
+                        </td>
+                        {% else %}
+                        <td>
+                        <a href="" class="btn btn-primary text-white"> {{i.estado}}</a>
+                        </td>
+                        {% endif %}
+
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock content %}

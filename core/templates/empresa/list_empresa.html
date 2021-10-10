@@ -17,10 +17,9 @@
                     <tr>
                         <th>Nit</th>
                         <th>Nombre</th>
-                        <th>Direccion</th>
+                        <th>Usuario Inv</th>
                         <th>Telefono</th>
                         <th>Email</th>
-                        <th>Localizacion</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -29,10 +28,14 @@
                     <tr>
                         <td>{{i.nit}}</td>
                         <td>{{i.nombre}}</td>
-                        <td>{{i.direccion}}</td>
+                        
+                        <td>
+                        {% for usuario in i.usuarios.all %}
+                        <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">Eliminar {{usuario}}</a>
+                        {% endfor %}
+                        </td>
                         <td>{{i.telefono}}</td>
                         <td>{{i.email}}</td>
-                        <td>{{i.paisestadociudad}}</td>
                         <td><a href="{% url 'empresa:delete-empresa' i.id %}" class="btn btn-primary text-white">Eliminar </a>
                         <a href="{% url 'empresa:update-empresa' i.id %}" class="btn btn-primary text-white">Editar </a>
                         </td>

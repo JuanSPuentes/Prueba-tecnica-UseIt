@@ -30,14 +30,15 @@ class Empresa(models.Model):
 
 ESTADO = (
     ('Espera','Espera'),
-    ('Rechazada','Rechazada'),
     ('Aceptada','Aceptada')
 )
+
+
 class Invitaciones(models.Model):
     user = models.ForeignKey(User, verbose_name=("Usuario Invitado"), on_delete=models.CASCADE)
     empresa = models.ForeignKey(Empresa, verbose_name=("Empresa"), on_delete=models.CASCADE, null=True, blank=True)
     estado = models.CharField(max_length=10, choices=ESTADO, default='Espera')
-    
+
     def __str__(self):
         return self.user.username
 
