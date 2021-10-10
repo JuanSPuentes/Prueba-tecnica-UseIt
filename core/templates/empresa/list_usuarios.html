@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">MIS EMPRESAS</p>
+    </div>
+    <div class="card-body">
+        <div
+            class="table-responsive table mt-2"
+            id="dataTable"
+            role="grid"
+            aria-describedby="dataTable_info">
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in object_list  %}
+                    {% comment %} El usuario que esta logeado no se puede mandar una invitacion asi mismo {% endcomment %}
+                    {% if i.user != user %}
+                    <tr>
+                        <td>{{i.user}}</td>
+
+                        <td>
+                        {% comment %} Validacion del estado de la inivtacion {% endcomment %}
+                        {% if i.estado == 'Espera' %}
+                        {% comment %} si la invitacion tiene la misma empresa permitir mostrar el estado que tiene
+                        con esa empresa si no mostra la posibilidad de invitar {% endcomment %}
+                            {% if i.empresa == empresa and empresa !=  None %}
+                                <a href="" class="btn btn-primary text-white">{{i.estado}}</a>
+                            {% else %}
+                            {% comment %} Si el usuario logeado tiene una empresa darle la posibilidad de invitar {% endcomment %}
+                            {% if empresa %}
+                                <a href="{% url 'empresa:invitar-usuario' i.user %}" class="btn btn-primary text-white">Invitar</a>
+                            {% else %}
+                            {% comment %} No se puede invitar a una persona a la empresa si no tiene empresa {% endcomment %}
+                                <a href="" class="btn btn-primary text-white">No tienes empresa</a>
+                            {% endif %}
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'empresa:invitar-usuario' i.user %}" class="btn btn-primary text-white">Invitar</a>
+                        {% endif %}
+                        </td>
+                    </tr>
+
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock content %}

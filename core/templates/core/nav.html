@@ -27,14 +27,20 @@
                     <span>Login</span>
                 </a>
             </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'account_signup' %}">
+                    <i class="fas fa-user"></i>
+                    <span>Registro</span>
+                </a>
+            </li>
             {% endif %}
 
             {% if request.user.is_authenticated %}
             {% comment %} {% if not request.user.groups.id == 1 %} {% endcomment %}
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{% url 'empresa:list-usuario' %}">
                     <i class="fas fa-eye"></i>
-                    <span>Ver todos los proyectos</span>
+                    <span>Invitar Usuarios</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">

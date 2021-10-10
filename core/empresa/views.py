@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls.base import reverse, reverse_lazy
-from django.views.generic.edit import DeleteView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView
 import requests
 from empresa.forms import EmpresaForm
-from empresa.models import Empresa, PaisEstadoCiudad
+from empresa.models import Empresa, Invitaciones, PaisEstadoCiudad
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -102,3 +103,31 @@ class DeleteEmpresa(LoginRequiredMixin, DeleteView):
                 return super().dispatch(request, *args, **kwargs)
         return redirect('Home')
 
+class ListUsuarios(LoginRequiredMixin, ListView):
+    model = Invitaciones
+    template_name = 'empresa/list_usuarios.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            empresa = Empresa.objects.get(user = self.request.user)
+        except:
+            empresa = None
+        context["empresa"] =  empresa
+        return context
+    
+
+class CreateInvitaciones(LoginRequiredMixin, DetailView):
+    model = Invitaciones
+    template_name = "empresa/list_usuarios.html"
+
+    def get(self, request, *args, **kwargs):
+        empresa = Empresa.objects.filter(user = request.user).first()
+        invitado = User.objects.get(username = kwargs['user'])
+
+        invitacion = Invitaciones.objects.get(user = invitado)
+        print(invitacion)
+        print(empresa)
+        invitacion.empresa = empresa
+        invitacion.save()
+        return redirect('empresa:list-usuario') 

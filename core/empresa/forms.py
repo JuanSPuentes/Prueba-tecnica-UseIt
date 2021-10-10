@@ -1,6 +1,6 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
-from empresa.models import Empresa, PaisEstadoCiudad
+from empresa.models import Empresa, Invitaciones, PaisEstadoCiudad
 
 class EmpresaForm(forms.ModelForm):
     nit = forms.CharField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark', 'placeholder':'800.197.268-4'}), required=True, max_length=13)
@@ -40,3 +40,4 @@ class EmpresaForm(forms.ModelForm):
                 raise forms.ValidationError("Elige una opcion correcta")
 
         return paisestadociudad
+
