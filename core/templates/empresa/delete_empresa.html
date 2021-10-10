@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% include 'core/nav.html' %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">ELIMINAR EMPRESA</p>
+    </div>
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <label class="text-dark text-center" for="nit">Seguro que quieres elimiar esta empresa?</label>
+            <h4>{{ object.nombre }}</h4>
+            <button class="btn btn-primary btn-block text-white btn-user mt-2" type="submit">Eliminar Empresa</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

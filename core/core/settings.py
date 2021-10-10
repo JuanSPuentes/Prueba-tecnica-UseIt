@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'core',
+    'empresa',
+    "phonenumber_field",
+    
 ]
 SITE_ID  =1
 #--------------------Allauth config ----------------#
@@ -44,11 +47,11 @@ ACCOUNT_EMAIL_UNIQUE = True
 """ AUTH_USER_MODEL = "accounts.User" """
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 0
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 0
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "empresa:create-empresa"
 LOGIN_URL = "account_login"
 
 #Se usa para ponder usar la autenticacion con allouth, configuracion basi

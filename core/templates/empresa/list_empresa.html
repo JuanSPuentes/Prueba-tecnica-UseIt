@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">MIS EMPRESAS</p>
+    </div>
+    <div class="card-body">
+        <div
+            class="table-responsive table mt-2"
+            id="dataTable"
+            role="grid"
+            aria-describedby="dataTable_info"
+        >
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Nit</th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Telefono</th>
+                        <th>Email</th>
+                        <th>Localizacion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in object %}
+                    <tr>
+                        <td>{{i.nit}}</td>
+                        <td>{{i.nombre}}</td>
+                        <td>{{i.direccion}}</td>
+                        <td>{{i.telefono}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.paisestadociudad}}</td>
+                        <td><a href="{% url 'empresa:delete-empresa' i.id %}" class="btn btn-primary text-white">Eliminar </a>
+                        <a href="{% url 'empresa:update-empresa' i.id %}" class="btn btn-primary text-white">Editar </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock content %}

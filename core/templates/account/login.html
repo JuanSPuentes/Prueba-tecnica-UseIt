@@ -11,8 +11,14 @@
                                         <h4 class="text-dark mb-4">Registro de Usuarios</h4>
                                     </div>
                                     <form action="" method="post">{% csrf_token %}
-
-{{form.as_p}}
+                                        <p>
+                                            <label class="text-dark text-center" for="id_login">E-mail:</label> 
+                                            <input class="border rounded-0 form-control" type="email" name="login" placeholder="E-mail" autocomplete="email" required="" id="id_login">
+                                        </p>
+                                        <p>
+                                            <label class="text-dark text-center" for="id_password">Contraseña:</label> 
+                                            <input class="border rounded-0 form-control" type="password" name="password" placeholder="Contraseña" autocomplete="current-password" required="" id="id_password">
+                                        </p>
                                         <button class="btn btn-primary btn-block text-white btn-user" type="submit">Iniciar Sesion</button>
                                     </form>
                                 </div>
