@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% include 'core/nav.html' %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">CREAR CONTACTO EMPRESA CLIENTE</p>
+    </div>
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <label class="text-dark text-center" for="nombre">Nombres</label>
+            {{form.nombre.errors}}
+        {{form.nombre}}
+            <label class="textapellido-dark text-center" for="apellido">Apellidos</label>
+            {{form.apellido.errors}}
+        {{form.apellido}}
+            <label class="text-dark text-center" for="email">Correo Electronico</label>
+            {{form.email.errors}}
+        {{form.email}}
+            <label class="text-dark text-center" for="telefono">Telefono</label>
+            {{form.telefono.errors}}
+        {{form.telefono}}
+            <label class="text-dark text-center" for="celular">Celular</label>
+            {{form.celular.errors}}
+        {{form.celular}}
+            <button class="btn btn-primary btn-block text-white btn-user mt-5" type="submit">Crear Contacto</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+nombre

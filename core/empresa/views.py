@@ -6,7 +6,7 @@ from django.urls.base import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView
 import requests
-from empresa.forms import EmpresaClienteForm, EmpresaForm
+from empresa.forms import ContanctosEmpresaForm, EmpresaClienteForm, EmpresaForm
 from empresa.models import ContanctosEmpresa, Empresa, EmpresaCliente, Invitaciones, PaisEstadoCiudad
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -229,5 +229,21 @@ class UpdateEmpresaCliente(LoginRequiredMixin, UpdateView):
         empresa = form.save()
         datapais = form.cleaned_data.get('paisestadociudad')
         empresa.paisestadociudad = PaisEstadoCiudad.objects.get(nombre = datapais)
+        empresa.save()
+        return super().form_valid(form)
+
+#Creacion de contacto y agragarlos a el empres cliente
+class CreateContactoEmpresa(LoginRequiredMixin, CreateView):
+    model = ContanctosEmpresa
+    form_class = ContanctosEmpresaForm
+    template_name = "empresa/create_contacto_empresa.html"
+    success_url = reverse_lazy("empresa:list-empresa-cliente")
+
+    def form_valid(self, form):
+        contacto = form.save()
+        empresa = EmpresaCliente.objects.get(id = self.kwargs['pk'])
+        contacto.empresa = empresa
+        contacto.save()
+        empresa.contacto.add(contacto)
         empresa.save()
         return super().form_valid(form)

@@ -19,7 +19,7 @@
                         <th>Nombre</th>
                         <th>Usuario Pertenecen a la empresa</th>
                         <th>Telefono</th>
-                        <th>Email</th>
+                        <th>Agregar Contacto</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -33,11 +33,11 @@
 
                         {% for usuario in i.contacto.all %}
                         
-                        <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">{{usuario}} Eliminar?</a>
+                        <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">{{usuario.nombre}} Eliminar?</a>
                         {% endfor %}
                         </td>
                         <td>{{i.telefono}}</td>
-                        <td>{{i.email}}</td>
+                        <td><a href="{% url 'empresa:create-contacto-cliente' i.id %}" class="btn btn-primary text-white">Agregar Contacto </a></td>
                         <td><a href="{% url 'empresa:delete-empresa-cliente' i.id %}" class="btn btn-primary text-white">Eliminar </a>
                         <a href="{% url 'empresa:update-empresa-cliente' i.id %}" class="btn btn-primary text-white">Editar </a>
                         </td>

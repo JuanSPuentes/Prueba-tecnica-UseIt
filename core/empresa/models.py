@@ -62,7 +62,7 @@ class ContanctosEmpresa(models.Model):
     email = models.EmailField(max_length=250, verbose_name="Correo electronico")
     telefono =  models.CharField(unique = True, verbose_name="Telefono Fijo",  max_length=150)
     celular = PhoneNumberField(unique = True, null = False, blank = False)
-    empresa = models.ForeignKey(EmpresaCliente, verbose_name=("Empresa de la que son contacto "), on_delete=models.CASCADE)
+    empresa = models.ForeignKey(EmpresaCliente, verbose_name=("Empresa de la que son contacto "), on_delete=models.CASCADE, null=True)
 
 
 

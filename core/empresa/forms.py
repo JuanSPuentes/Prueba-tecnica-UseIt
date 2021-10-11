@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models import fields
 from phonenumber_field.formfields import PhoneNumberField
 from empresa.models import ContanctosEmpresa, Empresa, EmpresaCliente, PaisEstadoCiudad
 
@@ -83,6 +82,19 @@ class EmpresaClienteForm(forms.ModelForm):
         return paisestadociudad
 
 class ContanctosEmpresaForm(forms.ModelForm):
+    nombre = forms.CharField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark'}), required=True)
+    apellido = forms.CharField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark'}), required=True)
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class':'border rounded-0 form-control text-dark', 'placeholder':'correo@correo.com'}), required=True)
+    telefono = forms.CharField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark'}), required=True, max_length=13)
+    celular = PhoneNumberField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark', 'placeholder':'+573103218350'}), required=True)
+    
     class Meta:
         model = ContanctosEmpresa
         fields = ('nombre', 'apellido', 'email', 'telefono', 'celular')
+        
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if 'email' in self.changed_data:
+            if EmpresaCliente.objects.filter(email__iexact=email).exists():
+                raise forms.ValidationError("El email ya esta registrado")
+        return email

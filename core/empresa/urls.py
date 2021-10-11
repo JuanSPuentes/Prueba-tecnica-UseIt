@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AceptarInvitacion, CreateEmpresa, CreateEmpresaCliente, CreateInvitaciones, DeleteEmpresa, DeleteEmpresaCliente, DeleteUsuarioInvitado, ListEmpresa, ListEmpresaCliente, ListInvitaciones, ListUsuarios, RechazarInvitacion, UpdateEmpresa, UpdateEmpresaCliente, json_load
+from .views import AceptarInvitacion, CreateContactoEmpresa, CreateEmpresa, CreateEmpresaCliente, CreateInvitaciones, DeleteEmpresa, DeleteEmpresaCliente, DeleteUsuarioInvitado, ListEmpresa, ListEmpresaCliente, ListInvitaciones, ListUsuarios, RechazarInvitacion, UpdateEmpresa, UpdateEmpresaCliente, json_load
 app_name = "empresa"
 
 urlpatterns = [
@@ -21,4 +21,7 @@ urlpatterns = [
     path('listar/empresa_cliente/', ListEmpresaCliente.as_view(), name="list-empresa-cliente"),
     path('delete/empresa_cliente/<pk>', DeleteEmpresaCliente.as_view(), name="delete-empresa-cliente"),
     path('update/empresa_cliente/<pk>', UpdateEmpresaCliente.as_view(), name="update-empresa-cliente"),
+
+    #contactos empresa cliente
+    path('create/empresa_cliente/contactos/<pk>', CreateContactoEmpresa.as_view(), name ="create-contacto-cliente"),
 ]
