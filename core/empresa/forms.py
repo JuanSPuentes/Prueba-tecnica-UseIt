@@ -1,6 +1,7 @@
 from django import forms
+from django.db.models import fields
 from phonenumber_field.formfields import PhoneNumberField
-from empresa.models import Empresa, EmpresaCliente, PaisEstadoCiudad
+from empresa.models import ContanctosEmpresa, Empresa, EmpresaCliente, PaisEstadoCiudad
 
 class EmpresaForm(forms.ModelForm):
     nit = forms.CharField(widget=forms.TextInput(attrs={'class':'border rounded-0 form-control text-dark', 'placeholder':'800.197.268-4'}), required=True, max_length=13)
@@ -81,3 +82,7 @@ class EmpresaClienteForm(forms.ModelForm):
 
         return paisestadociudad
 
+class ContanctosEmpresaForm(forms.ModelForm):
+    class Meta:
+        model = ContanctosEmpresa
+        fields = ('nombre', 'apellido', 'email', 'telefono', 'celular')

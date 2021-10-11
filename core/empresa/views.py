@@ -7,7 +7,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView
 import requests
 from empresa.forms import EmpresaClienteForm, EmpresaForm
-from empresa.models import Empresa, EmpresaCliente, Invitaciones, PaisEstadoCiudad
+from empresa.models import ContanctosEmpresa, Empresa, EmpresaCliente, Invitaciones, PaisEstadoCiudad
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -181,7 +181,7 @@ class DeleteUsuarioInvitado(LoginRequiredMixin, DetailView):
 
         return redirect('empresa:list-empresa') 
 
-#Creacion de la empresa cliente
+#Creacion de la Empresa Cliente
 def CreateEmpresaCliente(request):
     if request.method == 'POST':
         form = EmpresaClienteForm(request.POST) 
@@ -202,7 +202,32 @@ def CreateEmpresaCliente(request):
 
     return render(request, 'empresa/create_empresa_cliente.html', context)
 
-#Listar empresa Cliente
+#Listar Empresa Cliente
 class ListEmpresaCliente(LoginRequiredMixin, ListView):
     model = EmpresaCliente
     template_name = "empresa/list_empresa_cliente.html"
+
+#Eliminar Empresa Cliente
+class DeleteEmpresaCliente(LoginRequiredMixin, DeleteView):
+    model= EmpresaCliente
+    template_name = "empresa/delete_empresa_cliente.html"
+    success_url = reverse_lazy("empresa:list-empresa-cliente")
+
+#Editar Empresa Cliente
+class UpdateEmpresaCliente(LoginRequiredMixin, UpdateView):
+    model = EmpresaCliente
+    form_class = EmpresaClienteForm
+    template_name = "empresa/update_empresa_cliente.html"
+    success_url = reverse_lazy("empresa:list-empresa-cliente")
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["PaisData"] = PaisEstadoCiudad.objects.all() 
+        return context
+        
+    def form_valid(self, form):
+        empresa = form.save()
+        datapais = form.cleaned_data.get('paisestadociudad')
+        empresa.paisestadociudad = PaisEstadoCiudad.objects.get(nombre = datapais)
+        empresa.save()
+        return super().form_valid(form)

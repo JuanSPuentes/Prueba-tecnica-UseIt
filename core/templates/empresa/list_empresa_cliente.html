@@ -38,8 +38,8 @@
                         </td>
                         <td>{{i.telefono}}</td>
                         <td>{{i.email}}</td>
-                        <td><a href="{% url 'empresa:delete-empresa' i.id %}" class="btn btn-primary text-white">Eliminar </a>
-                        <a href="{% url 'empresa:update-empresa' i.id %}" class="btn btn-primary text-white">Editar </a>
+                        <td><a href="{% url 'empresa:delete-empresa-cliente' i.id %}" class="btn btn-primary text-white">Eliminar </a>
+                        <a href="{% url 'empresa:update-empresa-cliente' i.id %}" class="btn btn-primary text-white">Editar </a>
                         </td>
                     </tr>
                     {% endfor %}
