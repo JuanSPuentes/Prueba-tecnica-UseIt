@@ -14,9 +14,21 @@
                 </a>
             </li>
             <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'empresa:create-empresa-cliente' %}">
+                    <i class="fas fa-plus"></i>
+                    <span>Crear Empresa Cliente</span>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
                 <a class="nav-link" href="{% url 'empresa:list-empresa' %}">
                     <i class="fas fa-folder-plus"></i>
                     <span>Ver Empresa</span>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'empresa:list-empresa-cliente' %}">
+                    <i class="fas fa-folder-plus"></i>
+                    <span>Ver Empresa Cliente</span>
                 </a>
             </li>
             {% comment %} {% endif %} {% endcomment %}

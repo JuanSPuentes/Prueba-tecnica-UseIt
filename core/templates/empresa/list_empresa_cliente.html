@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card shadow">
     <div class="card-header py-3">
-        <p class="text-primary m-0 font-weight-bold">MIS EMPRESAS</p>
+        <p class="text-primary m-0 font-weight-bold">EMPRESAS CLIENTE</p>
     </div>
     <div class="card-body">
         <div
@@ -24,13 +24,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in object %}
+                    {% for i in object_list  %}
                     <tr>
                         <td>{{i.nit}}</td>
                         <td>{{i.nombre}}</td>
                         
                         <td>
-                        {% for usuario in i.usuarios.all %}
+
+                        {% for usuario in i.contacto.all %}
+                        
                         <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">{{usuario}} Eliminar?</a>
                         {% endfor %}
                         </td>

@@ -6,8 +6,8 @@ from django.urls.base import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView
 import requests
-from empresa.forms import EmpresaForm
-from empresa.models import Empresa, Invitaciones, PaisEstadoCiudad
+from empresa.forms import EmpresaClienteForm, EmpresaForm
+from empresa.models import Empresa, EmpresaCliente, Invitaciones, PaisEstadoCiudad
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -39,7 +39,7 @@ def CreateEmpresa(request):
             empresa.paisestadociudad = PaisEstadoCiudad.objects.get(nombre = datapais)
             empresa.user = request.user
             empresa.save()
-            return HttpResponseRedirect(reverse('empresa:create-empresa'))
+            return HttpResponseRedirect(reverse('empresa:list-empresa'))
 
     else:
         form = EmpresaForm()
@@ -103,6 +103,7 @@ class DeleteEmpresa(LoginRequiredMixin, DeleteView):
                 return super().dispatch(request, *args, **kwargs)
         return redirect('Home')
 
+#Listar Los usuarios
 class ListUsuarios(LoginRequiredMixin, ListView):
     model = Invitaciones
     template_name = 'empresa/list_usuarios.html'
@@ -116,7 +117,7 @@ class ListUsuarios(LoginRequiredMixin, ListView):
         context["empresa"] =  empresa
         return context
     
-
+#Crear invitaciones
 class CreateInvitaciones(LoginRequiredMixin, DetailView):
     model = Invitaciones
 
@@ -129,6 +130,7 @@ class CreateInvitaciones(LoginRequiredMixin, DetailView):
         invitacion.save()
         return redirect('empresa:list-usuario') 
 
+#Listar las invitaciones que tiene de alguna empresa
 class ListInvitaciones(LoginRequiredMixin, ListView):
     model = Invitaciones
     template_name = "empresa/list_invitaciones.html"
@@ -138,6 +140,7 @@ class ListInvitaciones(LoginRequiredMixin, ListView):
         context["invitaciones"] =  Invitaciones.objects.filter(user = self.request.user)
         return context
 
+#Aceptar invitaciones de las empresas
 class AceptarInvitacion(LoginRequiredMixin, DetailView):
     model = Invitaciones
 
@@ -153,6 +156,7 @@ class AceptarInvitacion(LoginRequiredMixin, DetailView):
         empresa.save()
         return redirect('empresa:list-empresa') 
 
+#Rechazar Invitaciones de las empresas
 class RechazarInvitacion(LoginRequiredMixin, DetailView):
     model = Invitaciones
 
@@ -165,22 +169,40 @@ class RechazarInvitacion(LoginRequiredMixin, DetailView):
         invitacion.save()
         return redirect('empresa:list-empresa')
 
+#Eliminar usuarios invitados a la empresa
 class DeleteUsuarioInvitado(LoginRequiredMixin, DetailView):
     model = Empresa 
 
     def get(self, request, *args, **kwargs):
-        print(kwargs['user'])
         invitado = User.objects.get(username = kwargs['user'])
         #agregando el usuario a la empresa
         empresa = Empresa.objects.get(user = self.request.user)
         empresa.usuarios.remove(invitado)
-        empresa.save()
 
         return redirect('empresa:list-empresa') 
-    #Verificamos si el usuario que quiere Eliminar este objeto es al mismo al que le pertenece
-"""     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            empresa = Empresa.objects.get(pk = kwargs['pk'])
-            if empresa.user == request.user:
-                return super().dispatch(request, *args, **kwargs)
-        return redirect('Home') """
+
+#Creacion de la empresa cliente
+def CreateEmpresaCliente(request):
+    if request.method == 'POST':
+        form = EmpresaClienteForm(request.POST) 
+        if form.is_valid():
+            #si el formulario es valido añadirle el usuario que creo la empresa
+            empresa = form.save(commit=False)
+            datapais = form.cleaned_data.get('paisestadociudad')
+            empresa.paisestadociudad = PaisEstadoCiudad.objects.get(nombre = datapais)
+            empresa.save()
+            return HttpResponseRedirect(reverse('empresa:list-empresa'))
+
+    else:
+        form = EmpresaClienteForm()
+    context = {
+        'form':form,
+        'PaisData': PaisEstadoCiudad.objects.all(),
+    }
+
+    return render(request, 'empresa/create_empresa_cliente.html', context)
+
+#Listar empresa Cliente
+class ListEmpresaCliente(LoginRequiredMixin, ListView):
+    model = EmpresaCliente
+    template_name = "empresa/list_empresa_cliente.html"

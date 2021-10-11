@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% include 'core/nav.html' %}
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold">CREAR EMPRESA CLIENTE</p>
+    </div>
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            <label class="text-dark text-center" for="nit">Nit de la Empresa</label>
+            {{form.nit.errors}}
+        {{form.nit}}
+            <label class="text-dark text-center" for="nombre">Nombre de la Empresa</label>
+            {{form.nombre.errors}}
+        {{form.nombre}}
+            <label class="text-dark text-center" for="nombre_comercial">Nombre Comercial de la Empresa</label>
+            {{form.nombre_comercial.errors}}
+        {{form.nombre_comercial}}
+            <label class="text-dark text-center" for="direccion">Direccion</label>
+            {{form.direccion.errors}}
+        {{form.direccion}}
+            <label class="text-dark text-center" for="telefono">Telefono</label>
+            {{form.telefono.errors}}
+        {{form.telefono}}
+            <label class="text-dark text-center" for="email">Email</label>
+            {{form.email.errors}}
+        {{form.email}}
+            <label class="text-dark text-center" for="web">Web</label>
+            {{form.web.errors}}
+        {{form.web}}
+            <label class="text-dark text-center" for="web">Pais, Estado, Ciudad</label>
+            {{form.paisestadociudad.errors}}
+            <input
+                value=""
+                placeholder="Pais, Estado, Ciudad"
+                type="text"
+                name="paisestadociudad"
+                list="id_paisestadociudad"
+                class="border rounded-0 form-control"
+            >
+            <datalist name="paisestadociudad" id="id_paisestadociudad">
+                {% for data in PaisData %}
+                <option value="{{data}}"></option>
+                {% endfor %}
+            </datalist>
+            <button class="btn btn-primary btn-block text-white btn-user mt-5" type="submit">Crear Empresa</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

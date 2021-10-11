@@ -42,3 +42,27 @@ class Invitaciones(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class EmpresaCliente(models.Model):
+    nit = models.CharField(max_length=13, verbose_name="Nit")
+    nombre = models.CharField(max_length=250, verbose_name="Nombre de la Empresa")
+    nombre_comercial = models.CharField(max_length=250, verbose_name="Nombre Comercial")
+    direccion = models.CharField(max_length=250, verbose_name="Direccion")
+    telefono = PhoneNumberField(unique = True, null = False, blank = False)
+    email = models.EmailField(max_length=250, verbose_name="Correo electronico")
+    web = models.CharField(max_length=250, verbose_name="Sito Web", unique=True)
+    paisestadociudad = models.ForeignKey(PaisEstadoCiudad, on_delete=models.SET_NULL, null=True, verbose_name="Pais, Estado, Ciudad")
+    contacto = models.ManyToManyField("ContanctosEmpresa", verbose_name=("Contactos de la empresa"))
+
+
+
+class ContanctosEmpresa(models.Model):
+    nombre = models.CharField(verbose_name="Nombres", max_length=150)
+    apellido = models.CharField(verbose_name="Apellidos", max_length=150)
+    email = models.EmailField(max_length=250, verbose_name="Correo electronico")
+    telefono =  models.CharField(unique = True, verbose_name="Telefono Fijo",  max_length=150)
+    celular = PhoneNumberField(unique = True, null = False, blank = False)
+    empresa = models.ForeignKey(EmpresaCliente, verbose_name=("Empresa de la que son contacto "), on_delete=models.CASCADE)
+
+
+
