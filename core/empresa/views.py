@@ -27,6 +27,8 @@ def json_load(request):
                 PaisEstadoCiudad.objects.create(nombre = my_dict[i]['country']+", "+ my_dict[i]['name'])        
     return redirect('home')
 
+"""  CRUD CREACION DE LA EMPRESA (PROPIETARIA)  """
+
 #Crear Empresa
 @login_required
 def CreateEmpresa(request):
@@ -116,7 +118,9 @@ class ListUsuarios(LoginRequiredMixin, ListView):
             empresa = None
         context["empresa"] =  empresa
         return context
-    
+
+
+"""  CRUD DE INVITACIONES A LA EMPRESA (PROPIETARIA)  """
 #Crear invitaciones
 class CreateInvitaciones(LoginRequiredMixin, DetailView):
     model = Invitaciones
@@ -181,6 +185,9 @@ class DeleteUsuarioInvitado(LoginRequiredMixin, DetailView):
 
         return redirect('empresa:list-empresa') 
 
+
+""" CRUD DE LA EMPRESA CLIETNE  """
+
 #Creacion de la Empresa Cliente
 def CreateEmpresaCliente(request):
     if request.method == 'POST':
@@ -232,6 +239,10 @@ class UpdateEmpresaCliente(LoginRequiredMixin, UpdateView):
         empresa.save()
         return super().form_valid(form)
 
+
+
+"""  CRUD DE CONTACTOS DE LA EMPRESA CLIENTE  """
+
 #Creacion de contacto y agragarlos a el empres cliente
 class CreateContactoEmpresa(LoginRequiredMixin, CreateView):
     model = ContanctosEmpresa
@@ -247,3 +258,30 @@ class CreateContactoEmpresa(LoginRequiredMixin, CreateView):
         empresa.contacto.add(contacto)
         empresa.save()
         return super().form_valid(form)
+
+#Eliminar Contacto de la empresa 
+class DeleteContactoEmpresa(LoginRequiredMixin, DetailView):
+    model = ContanctosEmpresa 
+
+    def get(self, request, *args, **kwargs):
+        contacto = ContanctosEmpresa.objects.get(pk = kwargs['pk'])
+        contacto.delete()
+        return redirect('empresa:list-empresa-cliente') 
+
+#Listar Contactos de la empresa
+class ListContactoEmpresa(LoginRequiredMixin, ListView):
+    model = ContanctosEmpresa
+    template_name = "empresa/list_contacto_empresa.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        empresa = EmpresaCliente.objects.get(pk = self.kwargs['pk'])
+        context["contacto"] =  ContanctosEmpresa.objects.filter(empresa = empresa)
+        context["empresa"] = empresa
+        return context
+
+class UpdateContactoEmpresa(LoginRequiredMixin, UpdateView):
+    model = ContanctosEmpresa
+    form_class = ContanctosEmpresaForm
+    template_name = "empresa/update_contacto_empresa.html"
+    success_url = reverse_lazy("empresa:list-empresa-cliente")

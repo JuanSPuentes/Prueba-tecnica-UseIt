@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-primary m-0 font-weight-bold upper">Contactos de {{ empresa.nombre }}</p>
+    </div>
+    <div class="card-body">
+        <div
+            class="table-responsive table mt-2"
+            id="dataTable"
+            role="grid"
+            aria-describedby="dataTable_info"
+        >
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <a href="{% url 'empresa:create-contacto-cliente' empresa.id %}" class="btn btn-primary text-white">Crear Contacto</a>
+                <tbody>
+                    {% for i in contacto  %}
+                    <tr>
+                        <td>{{i.nombre}}</td>
+                        <td>{{i.apellido}}</td>
+                        <td>{{i.celular}}</td>
+                        <td>{{i.email}}</td>
+                        <td><a href="{% url 'empresa:delete-contacto-cliente' i.id %}" class="btn btn-primary text-white">Eliminar </a>
+                        <a href="{% url 'empresa:update-contacto-cliente' i.id %}" class="btn btn-primary text-white">Editar </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+        {% endblock content %}

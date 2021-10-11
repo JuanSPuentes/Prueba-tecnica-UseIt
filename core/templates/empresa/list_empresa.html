@@ -30,9 +30,13 @@
                         <td>{{i.nombre}}</td>
                         
                         <td>
-                        {% for usuario in i.usuarios.all %}
+                        {% if i.usuarios.all  %}
+                        {% for usuario in i.usuarios.all  %}
                         <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">{{usuario}} Eliminar?</a>
                         {% endfor %}
+                        {% else %}
+                        Ningun usuario pertenece a esta empresa
+                        {% endif %}
                         </td>
                         <td>{{i.telefono}}</td>
                         <td>{{i.email}}</td>

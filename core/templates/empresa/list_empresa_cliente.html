@@ -23,6 +23,7 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     {% for i in object_list  %}
                     <tr>
@@ -30,17 +31,21 @@
                         <td>{{i.nombre}}</td>
                         
                         <td>
-
+                        {% if i.contacto.all %}
                         {% for usuario in i.contacto.all %}
                         
-                        <a class="btn-block text-dark" style="text-decoration:None" href="{% url 'empresa:delete-usuario-invitado' usuario %}">{{usuario.nombre}} Eliminar?</a>
+                        <a class="btn-block text-dark" style="text-decoration:None">{{usuario.nombre}}</a>
                         {% endfor %}
+                        {% else %}
+                        No tienes contactos en esta empresa
+                        {% endif %}
                         </td>
                         <td>{{i.telefono}}</td>
-                        <td><a href="{% url 'empresa:create-contacto-cliente' i.id %}" class="btn btn-primary text-white">Agregar Contacto </a></td>
+                        <td><a href="{% url 'empresa:list-contacto-cliente' i.id %}" class="btn btn-primary text-white">Ver o Crear Contactos </a></td>
                         <td><a href="{% url 'empresa:delete-empresa-cliente' i.id %}" class="btn btn-primary text-white">Eliminar </a>
                         <a href="{% url 'empresa:update-empresa-cliente' i.id %}" class="btn btn-primary text-white">Editar </a>
                         </td>
+
                     </tr>
                     {% endfor %}
                 </tbody>
