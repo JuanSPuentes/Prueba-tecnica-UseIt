@@ -1,0 +1,34 @@
+1. pip install requirements.txt
+2. Instalar db.sql para la base de datos o crear una base de datos y configurar las variables de entorno .env
+3. realiazar las migraciones correspondientes
+
+
+Respuestas a las preguntas  
+1.De 1 a 10 ¿Cómo calificas tu capacidad de aprender cosas nuevas?
+    RT//
+    Mi capacidad para aprender cosas nuevas evaluada de 1-10, seria 8, soy una persona que practica,
+    y copea las buenas practicas que observa de los demas
+
+2.¿Cuáles consideras que son las ventajas y desventajas de la computación en la nube?
+    RT//
+    Ventajas:
+        la principal ventaja es el ahorro de costes, mantenimiento y seguridad
+    
+    Desventajas:
+        Seguridad de los datos, se pone la informacion en manos del provedor de la nube, la dependencia de
+        estar siempre conectado a internet para acceder a la nube
+
+3.Para el desarrollo de la aplicación, pensando en el Back-end y Front-end, ¿cuáles serían las principales 
+consideraciones frente a la seguridad y cómo enfrentas el diseño de la solución desde la perspectiva del 
+desarrollo y la infraestructura?
+    RT//
+    Evaluar datos sensibles desde backend y frontend, evaluar quien puede acceder a las paginas y designar
+    grupos con permisos
+
+4.¿Qué tecnologías, lenguajes de programación y frameworks usarías y cuáles consideras ideales 
+para construir esta solución?
+    RT//
+    Django junto con React y postgres
+    express con React y postgres
+    Son tecnologias y stack  que considero que van bien juntas y que considero aprender.
+    
